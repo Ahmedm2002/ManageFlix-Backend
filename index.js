@@ -5,13 +5,13 @@ const { pool } = require('./dbConfig')
 
 app.use(express.json())
 
-const admin = require('./routes/Users/AdminAuth')
+const admin = require('./routes/Admins/AdminAuth')
 
 app.use('/admin', admin)
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('This is the backend for the ManageFlix Application!')
 })
 
 

@@ -17,12 +17,12 @@ router.post('/signup', async (req, res) => {
     console.log(hashedPassword);
 
     const result = await pool.query(
-      'INSERT INTO admins (username, email, password, name) VALUES ($1, $2, $3, $4)',
+      'INSERT INTO admins (username, email, password, name) VALUES ($1, $2, $3, $4) returning *',
       [username, email, hashedPassword, name]
     );
 
     if (result.rowCount >= 1) {
-      res.status(201).json({ message: "Admin created successfully" });
+      res.status(201).json({ message: "Admin created successfully", admin: result.rows[0] });
     } else {
       res.status(400).json({ error: "Admin creation failed" });
     }
@@ -31,10 +31,10 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login Endpoint
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
+  
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
-    res.status(200).json({ message: "Login successful", user: { username: user.username, email: user.email } });
+    res.status(200).json({ message: "Login successful", admin: user });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
