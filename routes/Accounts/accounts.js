@@ -4,10 +4,11 @@ const router = express.Router();
 
 
 router.get('/:admin_id', async (req, res) => {
-  const { admin_id } = req.params.admin_id
+  const { admin_id } = req.params
+  console.log(admin_id)
   try {
-    const adminAccounts = await pool.query('Select * where accounts where admin_id = $1',[admin_id])
-    res.status(200).json({ accounts : adminAccounts})
+    const adminAccounts = await pool.query('Select * from accounts where admin_id = $1',[admin_id])
+    res.status(200).json({ accounts : adminAccounts.rows})
   } catch (error) {
     res.status(500).json({error: error.message})
   }
