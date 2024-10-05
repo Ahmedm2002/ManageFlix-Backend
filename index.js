@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 5000
 const { pool } = require('./dbConfig')
+require('dotenv').config();
 
 app.use(express.json())
 
@@ -31,7 +32,6 @@ app.listen(port, () => {
         ======================  
     `)
 })
-
 
 async function checkDbConnection(){
   try {

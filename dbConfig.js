@@ -1,14 +1,15 @@
-const { Pool } = require('pg')
+const { Pool } = require('pg');
+require('dotenv').config()
 
 const pool = new Pool({
-  user:"root_application",
-  host:"applications-10324.7tc.aws-eu-central-1.cockroachlabs.cloud",
-  password:"d67gCsGV8SuuKakhBuq_fw",
-  database:"Mflix_db",
-  port:"26257",
-  ssl:{
-    rejectUnauthorized:false
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
+  ssl: {
+    rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true',
   },
-})
+});
 
-module.exports = { pool }
+module.exports = { pool };
