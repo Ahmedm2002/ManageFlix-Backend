@@ -7,8 +7,10 @@ require('dotenv').config();
 app.use(express.json())
 
 const admin = require('./routes/Admins/AdminAuth')
+const accounts = require('./routes/Accounts/accounts')
 
 app.use('/admin', admin)
+app.use('/accounts', accounts)
 
 
 app.get('/', (req, res) => {
