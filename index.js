@@ -6,11 +6,15 @@ require('dotenv').config();
 
 app.use(express.json())
 
+// Import Routes
 const admin = require('./routes/Admins/AdminAuth')
 const accounts = require('./routes/Accounts/accounts')
+const screens = require('./routes/Screens/screens')
 
+// Files for each endpoint
 app.use('/admin', admin)
 app.use('/accounts', accounts)
+app.use('/screens', screens)
 
 
 app.get('/', (req, res) => {
@@ -59,5 +63,7 @@ async function checkDbConnection(){
       
   }
 }
+
+
 
 checkDbConnection()

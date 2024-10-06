@@ -18,7 +18,8 @@ router.post('/add-account',async(req, res) => {
   const { admin_id, login_email, password } = req.body;
   const service_name = "Netflix"
   try {
-    const id = Math.round(Math.random() * 100000)
+    const id = Math.round(Math.random() * 100000000000)
+
     const addedAccount = await pool.query('insert into accounts (id, service_name, login_email, password, admin_id) values ($1, $2, $3, $4, $5) RETURNING * ',[id, service_name, login_email, password, admin_id])
 
     res.status(201).json({message:"Account created successsfully", account: addedAccount.rows})
