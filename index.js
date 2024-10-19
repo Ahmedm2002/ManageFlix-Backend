@@ -1,27 +1,28 @@
-const express = require('express')
-const app = express()
-const port = 5000
-const { pool } = require('./dbConfig')
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors"); // Import cors
+const app = express();
+const port = 5000;
+const { pool } = require("./dbConfig");
+require("dotenv").config();
 
-app.use(express.json())
+app.use(cors()); // Enable CORS for all origins
+app.use(express.json());
 
 // Import Routes
-const admin = require('./routes/Admins/AdminAuth')
-const accounts = require('./routes/Accounts/accounts')
-const screens = require('./routes/Screens/screens')
+const admin = require("./routes/Admins/AdminAuth");
+const accounts = require("./routes/Accounts/accounts");
+const screens = require("./routes/Screens/screens");
+const Leads = require("./routes/Leads/leads");
 
 // Files for each endpoint
-app.use('/admin', admin)
-app.use('/accounts', accounts)
-app.use('/screens', screens)
+app.use("/admin", admin);
+app.use("/accounts", accounts);
+app.use("/screens", screens);
+app.use("/ads", Leads);
 
-
-app.get('/', (req, res) => {
-  res.send('This is the backend for the ManageFlix Application!')
-})
-
-
+app.get("/", (req, res) => {
+  res.send("This is the backend for the ManageFlix Application!");
+});
 
 app.listen(port, () => {
   console.log(`
@@ -36,13 +37,13 @@ app.listen(port, () => {
         +++++ Port: ${port} +++++
         ======================
         ======================  
-    `)
-})
+    `);
+});
 
-async function checkDbConnection(){
+async function checkDbConnection() {
   try {
-    const result = await pool.query('select now()')
-    if(result){
+    const result = await pool.query("select now()");
+    if (result) {
       console.log(`
         **********************
         **********************
@@ -52,18 +53,15 @@ async function checkDbConnection(){
         `);
     }
   } catch (error) {
-      console.log(`
+    console.log(`
           ##################
           ##################
           ***** Failed *****
           ##################
           ##################
         `);
-        console.log(`Error Message: ${error.message}`);
-      
+    console.log(`Error Message: ${error.message}`);
   }
 }
 
-
-
-checkDbConnection()
+checkDbConnection();
